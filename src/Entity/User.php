@@ -37,6 +37,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: "string", length: 20)]
     private string $rol = self::ROLE_USER; // Usar la constante para el valor por defecto
 
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    private ?string $profilePicture = null;
+
     // Getters y Setters
     public function getId(): ?int
     {
@@ -123,5 +126,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return $this->email; // Devuelve el email como identificador único del usuario
+    }
+
+    public function getProfilePicture(): ?string
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture(?string $profilePicture): self
+    {
+        $this->profilePicture = $profilePicture;
+        return $this;
     }
 }

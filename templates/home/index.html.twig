@@ -25,18 +25,29 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/profile">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        {% if app.user %}
-                            {# Si el usuario está autenticado, mostrar el botón "Exit" #}
+                    {% if app.user %}
+                        {# Mostrar la foto de perfil y el nombre del usuario #}
+                        <li class="nav-item d-flex align-items-center me-3">
+                            <img src="{{ user.profilePicture ?? '/assets/images/profile-placeholder.jpg' }}"
+                                 alt="Profile Picture"
+                                 class="rounded-circle me-2"
+                                 style="width: 40px; height: 40px;">
+                            <span class="text-light">Welcome, {{ user.name }}!</span>
+                        </li>
+                        {# Mostrar el botón "Profile" #}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/profile">Profile</a>
+                        </li>
+                        {# Mostrar el botón "Exit" #}
+                        <li class="nav-item">
                             <a class="nav-link btn btn-outline-danger" href="{{ path('app_logout') }}">Exit</a>
-                        {% else %}
-                            {# Si el usuario no está autenticado, mostrar el botón "Login" #}
+                        </li>
+                    {% else %}
+                        {# Mostrar el botón "Login" si el usuario no está autenticado #}
+                        <li class="nav-item">
                             <a class="nav-link btn btn-outline-primary" href="{{ path('app_login') }}">Login</a>
-                        {% endif %}
-                    </li>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -72,7 +83,6 @@
     </div>
 
     <div class="container my-5">
-
         <div class="my-5">
             <h2 class="text-center mb-4">Search For Movies</h2>
             <form id="searchForm" class="mb-3">

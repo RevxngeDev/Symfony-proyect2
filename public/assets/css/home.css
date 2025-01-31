@@ -114,3 +114,17 @@ body {
     background-color: #bb86fc;
     border-color: #bb86fc;
 }
+
+/* Estilos para la foto de perfil y el nombre del usuario */
+.navbar .navbar-nav .nav-item.user-info {
+    margin-right: 1rem; /* Espacio a la derecha */
+}
+
+.navbar .navbar-nav .nav-item.user-info img {
+    border: 2px solid #fff; /* Borde blanco para la foto */
+}
+
+.navbar .navbar-nav .nav-item.user-info span {
+    font-size: 1rem; /* Tamaño del texto */
+    color: #fff; /* Color del texto */
+}
