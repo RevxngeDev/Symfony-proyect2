@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Add Film</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/addFilms.css">
+</head>
+<body>
+<div class="container">
+    <div class="film-container">
+        <h1 class="text-center">Add New Film</h1>
+        <form id="filmForm">
+            <div class="form-group">
+                <label for="name">Film Name:</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter film name" required>
+            </div>
+            <div class="form-group">
+                <label for="picture">Film Picture:</label>
+                <input type="file" class="form-control-file" id="picture" name="picture" required>
+            </div>
+            <div class="form-group">
+                <label for="type">Type:</label>
+                <select class="form-control" id="type" name="type" required>
+                    <option value="COMEDY">Comedy</option>
+                    <option value="HORROR">Horror</option>
+                    <option value="ROMANCE">Romance</option>
+                    <option value="ANIMATED">Animated</option>
+                    <option value="ACTION">Action</option>
+                    <option value="FANTASY">Fantasy</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="overview">Overview:</label>
+                <textarea class="form-control" id="overview" name="overview" rows="3" placeholder="Enter film overview" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="youtubeLink">YouTube Link:</label>
+                <input type="url" class="form-control" id="youtubeLink" name="youtubeLink" placeholder="Enter YouTube link" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input type="number" class="form-control" id="price" name="price" placeholder="Enter price" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Film</button>
+            <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+        </form>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

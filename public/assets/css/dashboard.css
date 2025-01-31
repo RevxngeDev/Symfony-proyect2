@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    margin: 0;
+    overflow-y: scroll;
+    opacity: 1;
+    background-color: #f8f9fa;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+    color: #495057;
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+    color: #007bff;
+}
+
+.navbar-expand .navbar-nav {
+    margin-left: auto;
+}
+
+li {
+    list-style: none;
+}
+
+h4 {
+    font-size: 1.275rem;
+    color: #495057;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+#sidebar {
+    background: #f1f1f1;
+    max-width: 264px;
+    min-width: 264px;
+    transition: all 0.35s ease-in-out;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.main {
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-width: 0;
+    overflow: hidden;
+    transition: all 0.35s ease-in-out;
+    width: 100%;
+}
+
+.sidebar-logo {
+    padding: 1.15rem;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.sidebar-logo a {
+    color: #495057;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.sidebar-nav {
+    padding: 0;
+}
+
+.sidebar-header {
+    padding: 0.75rem 1rem;
+    color: #6c757d;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-top: 1px solid #e9ecef;
+}
+
+.sidebar-item {
+    padding: 0.75rem 1rem;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.sidebar-item:hover {
+    background-color: #e9ecef;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    color: #495057;
+}
+
+.sidebar-link i {
+    margin-right: 8px;
+    font-size: 1rem;
+}
+
+.card {
+    border: 1px solid #e9ecef;
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.illustration-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.footer {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6c757d;
+    padding: 15px 0;
+    background-color: #f1f1f1;
+    border-top: 1px solid #e9ecef;
+}
+
+.footer a {
+    color: #007bff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+#sidebar-toggle {
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+
+#sidebar-toggle:hover {
+    color: #007bff;
+}

@@ -1,0 +1,12 @@
+.film-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    margin-top: 50px;
+}
+.form-group {
+    margin-bottom: 15px;
+}
