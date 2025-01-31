@@ -29,16 +29,10 @@ class SignUpController extends AbstractController
 
             $this->userService->registerUser($email, $password, $name, $lastname, $phone);
 
-            return $this->redirectToRoute('app_sign_up_success'); // Redirige después del registro
+            return $this->redirectToRoute('app_login'); // Redirige después del registro
         }
 
         return $this->render('signUp.html.twig');
-    }
-
-    #[Route('/signUp/success', name: 'app_sign_up_success')]
-    public function signUpSuccess(): Response
-    {
-        return new Response('<h1>Registro exitoso</h1>');
     }
 }
 

@@ -13,16 +13,16 @@
     <div class="signin-header">
         <h2>Sign In</h2>
     </div>
-    <form action="/signIn" method="post">
+    <form action="{{ path('app_login') }}" method="post">
         <div class="mb-3">
-            <label for="email" class="form-label">Email address</label>
-            <input name="email" type="email" class="form-control" id="email" placeholder="Enter your email" required>
+            <label for="username" class="form-label">Email</label>
+            <input type="email" class="form-control" id="username" name="_username" value="{{ last_username }}" required>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input name="password" type="password" class="form-control" id="password" placeholder="Enter your password" required>
+            <input type="password" class="form-control" id="password" name="_password" required>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Submit</button>
+        <button type="submit" class="btn btn-primary w-100">Login</button>
     </form>
     <div class="alternative-option">
         <p>Don't have an account? <a href="/signUp">create one</a>.</p>

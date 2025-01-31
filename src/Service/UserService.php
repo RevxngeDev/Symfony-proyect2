@@ -4,7 +4,6 @@ namespace App\Service;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserService
 {
@@ -15,7 +14,7 @@ class UserService
         $this->entityManager = $entityManager;
     }
 
-    public function registerUser(string $email, string $password, string $name, string $lastname, ?string $phone): void
+    public function registerUser(string $email, string $password, string $name, string $lastname, ?string $phone, string $rol = User::ROLE_USER): void
     {
         $user = new User();
         $user->setEmail($email);
@@ -23,6 +22,7 @@ class UserService
         $user->setName($name);
         $user->setLastname($lastname);
         $user->setPhone($phone);
+        $user->setRol($rol); // Asignar el rol (por defecto 'ROLE_USER')
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();

@@ -29,7 +29,13 @@
                         <a class="nav-link" href="/profile">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-primary" href="/login">Login</a>
+                        {% if app.user %}
+                            {# Si el usuario está autenticado, mostrar el botón "Exit" #}
+                            <a class="nav-link btn btn-outline-danger" href="{{ path('app_logout') }}">Exit</a>
+                        {% else %}
+                            {# Si el usuario no está autenticado, mostrar el botón "Login" #}
+                            <a class="nav-link btn btn-outline-primary" href="{{ path('app_login') }}">Login</a>
+                        {% endif %}
                     </li>
                 </ul>
             </div>
