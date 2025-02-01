@@ -56,5 +56,16 @@ class UserService
 
         return $queryBuilder->getQuery()->getResult();
     }
+    public function getUserById(int $id): ?User
+    {
+        return $this->entityManager->getRepository(User::class)->find($id);
+    }
+
+    public function deleteUser(User $user): void
+    {
+        $this->entityManager->remove($user);
+        $this->entityManager->flush();
+    }
+
 
 }

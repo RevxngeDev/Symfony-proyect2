@@ -35,4 +35,20 @@ class UserController extends AbstractController
             'sort' => $sort,
         ]);
     }
+    #[Route('/users/{id}/delete', name: 'app_user_delete', methods: ['POST'])]
+    public function delete(int $id): Response
+    {
+        $user = $this->userService->getUserById($id);
+
+        if (!$user) {
+            $this->addFlash('error', 'User not found.');
+            return $this->redirectToRoute('app_users');
+        }
+
+        $this->userService->deleteUser($user);
+        $this->addFlash('success', 'User deleted successfully.');
+
+        return $this->redirectToRoute('app_users');
+    }
+
 }
