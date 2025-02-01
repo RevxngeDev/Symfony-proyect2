@@ -51,28 +51,44 @@
 
     <h2 class="text-center">Film List</h2>
     <div id="filmList" class="list-group">
-        {% for film in films %}
-            <div class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                    <img src="{{ film.picture }}" alt="{{ film.name }}" style="width: 50px; height: auto; margin-right: 10px;">
-                    <span>{{ film.name }}</span>
-                </div>
-                <button class="btn btn-danger btn-sm delete-film" data-id="{{ film.id }}">Delete</button>
-            </div>
-        {% else %}
-            <p class="text-center">No films found.</p>
-        {% endfor %}
+        <!-- Las películas se cargarán aquí dinámicamente mediante AJAX -->
     </div>
+</div>
 
-</div>
-</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
     $(document).ready(function () {
+        // Cargar la lista de películas al iniciar la página
         loadFilms();
 
+        // Función para cargar las películas mediante AJAX
+        function loadFilms() {
+            $.ajax({
+                url: '/api/films',
+                method: 'GET',
+                success: function (data) {
+                    $('#filmList').empty(); // Limpiar la lista actual
+                    data.forEach(film => {
+                        $('#filmList').append(`
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <img src="${film.picture}" alt="${film.name}" style="width: 50px; height: auto; margin-right: 10px;">
+                                    <span>${film.name}</span>
+                                </div>
+                                <button class="btn btn-danger btn-sm delete-film" data-id="${film.id}">Delete</button>
+                            </div>
+                        `);
+                    });
+                },
+                error: function () {
+                    alert('Error loading films.');
+                }
+            });
+        }
+
+        // Manejar la eliminación de una película
         $(document).on('click', '.delete-film', function () {
             const filmId = $(this).data('id');
 
@@ -81,7 +97,7 @@
                     url: '/films/' + filmId,
                     method: 'DELETE',
                     success: function () {
-                        location.reload(); // Recargar la página para actualizar la lista
+                        loadFilms(); // Recargar la lista después de eliminar
                     },
                     error: function () {
                         alert('Error deleting the film.');
@@ -89,7 +105,6 @@
                 });
             }
         });
-
     });
 </script>
 </body>

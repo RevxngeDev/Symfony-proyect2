@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 class FilmController extends AbstractController
 {
     private FilmService $filmService;
@@ -46,7 +47,7 @@ class FilmController extends AbstractController
     public function deleteFilm(int $id): JsonResponse
     {
         $this->filmService->deleteFilm($id);
-        return new JsonResponse(null, 204);
+        return new JsonResponse(null, 204); // Respuesta 204 (No Content)
     }
 }
 
