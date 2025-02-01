@@ -13,14 +13,14 @@
     <div class="mb-3">
         <form action="/users" method="get" class="d-flex mb-3">
             <select name="searchType" class="form-select me-2">
-                <option value="name">Name</option>
-                <option value="email">Email</option>
+                <option value="name" {% if searchType == 'name' %}selected{% endif %}>Name</option>
+                <option value="email" {% if searchType == 'email' %}selected{% endif %}>Email</option>
             </select>
-            <input type="text" name="q" class="form-control me-2" placeholder="Buscar...">
+            <input type="text" name="q" class="form-control me-2" placeholder="Buscar..." value="{{ searchQuery }}">
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
-        <a href="/users?sort=asc" class="btn btn-primary">Sort by oldest</a>
-        <a href="/users?sort=desc" class="btn btn-primary">Sort by most recent</a>
+        <a href="/users?sort=asc&searchType={{ searchType }}&q={{ searchQuery }}" class="btn btn-primary {% if sort == 'asc' %}active{% endif %}">Sort by oldest</a>
+        <a href="/users?sort=desc&searchType={{ searchType }}&q={{ searchQuery }}" class="btn btn-primary {% if sort == 'desc' %}active{% endif %}">Sort by most recent</a>
     </div>
     <div class="table-responsive">
         <table class="table table-striped table-hover">
@@ -34,29 +34,19 @@
             </tr>
             </thead>
             <tbody>
-            <!-- Ejemplo de datos ficticios -->
-            <tr>
-                <td>1</td>
-                <td>johndoe@example.com</td>
-                <td>John</td>
-                <td>Doe</td>
-                <td>
-                    <form action="/users/1/delete" method="post" class="d-inline">
-                        <button type="submit" class="btn btn-danger btn-sm">Delate</button>
-                    </form>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>janedoe@example.com</td>
-                <td>Jane</td>
-                <td>Doe</td>
-                <td>
-                    <form action="/users/2/delete" method="post" class="d-inline">
-                        <button type="submit" class="btn btn-danger btn-sm">Delate</button>
-                    </form>
-                </td>
-            </tr>
+            {% for user in usersList %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.lastname }}</td>
+                    <td>
+                        <form action="/users/{{ user.id }}/delete" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
