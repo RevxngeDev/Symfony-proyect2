@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FilmRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FilmRepository::class)]
@@ -31,6 +33,18 @@ class Film
     #[ORM\Column(type: 'float')]
     private float $price;
 
+    #[ORM\Column(type: 'integer')]
+    private int $likes = 0; // Nuevo atributo para contar los "likes"
+
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'likedFilms')]
+    #[ORM\JoinTable(name: 'film_likes')]
+    private Collection $usersWhoLiked; // Relación ManyToMany con User
+
+    public function __construct()
+    {
+        $this->usersWhoLiked = new ArrayCollection();
+    }
+
     // Getters y Setters
     public function getId(): ?int { return $this->id; }
     public function getName(): string { return $this->name; }
@@ -50,4 +64,28 @@ class Film
 
     public function getPrice(): float { return $this->price; }
     public function setPrice(float $price): self { $this->price = $price; return $this; }
+
+    public function getLikes(): int { return $this->likes; }
+    public function setLikes(int $likes): self { $this->likes = $likes; return $this; }
+
+    public function getUsersWhoLiked(): Collection { return $this->usersWhoLiked; }
+
+    // Métodos para manejar los "likes"
+    public function addUserWhoLiked(User $user): self
+    {
+        if (!$this->usersWhoLiked->contains($user)) {
+            $this->usersWhoLiked[] = $user;
+            $this->likes++;
+        }
+        return $this;
+    }
+
+    public function removeUserWhoLiked(User $user): self
+    {
+        if ($this->usersWhoLiked->contains($user)) {
+            $this->usersWhoLiked->removeElement($user);
+            $this->likes--;
+        }
+        return $this;
+    }
 }

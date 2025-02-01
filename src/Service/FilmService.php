@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Film;
+use App\Entity\User;
 use App\Repository\FilmRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -69,6 +70,27 @@ class FilmService
             $this->entityManager->remove($film);
             $this->entityManager->flush();
         }
+    }
+
+    public function likeFilm(User $user, Film $film): void
+    {
+        if (!$film->getUsersWhoLiked()->contains($user)) {
+            $film->addUserWhoLiked($user);
+            $this->entityManager->flush();
+        }
+    }
+
+    public function unlikeFilm(User $user, Film $film): void
+    {
+        if ($film->getUsersWhoLiked()->contains($user)) {
+            $film->removeUserWhoLiked($user);
+            $this->entityManager->flush();
+        }
+    }
+
+    public function hasUserLikedFilm(User $user, Film $film): bool
+    {
+        return $film->getUsersWhoLiked()->contains($user);
     }
 }
 

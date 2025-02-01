@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Film;
+use App\Entity\User;
 use App\Repository\FilmRepository;
 use App\Service\FilmService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,7 +52,7 @@ class FilmController extends AbstractController
         $this->filmService->deleteFilm($id);
         return new JsonResponse(null, 204); // Respuesta 204 (No Content)
     }
-    // src/Controller/FilmController.php
+
     #[Route('/film/{id}', name: 'film_details')]
     public function details(FilmRepository $filmRepository, int $id): Response
     {
@@ -60,6 +62,31 @@ class FilmController extends AbstractController
         }
         return $this->render('films.html.twig', [
             'film' => $film,
+        ]);
+    }
+
+    #[Route('/film/{id}/like', name: 'film_like', methods: ['POST'])]
+    public function likeFilm(Request $request, Film $film): JsonResponse
+    {
+        $user = $this->getUser(); // Obtiene el usuario actual
+
+        if (!$user) {
+            return new JsonResponse(['error' => 'User not authenticated'], 401);
+        }
+
+        // Verifica si el usuario ya dio "like"
+        if ($this->filmService->hasUserLikedFilm($user, $film)) {
+            $this->filmService->unlikeFilm($user, $film);
+            $action = 'unliked';
+        } else {
+            $this->filmService->likeFilm($user, $film);
+            $action = 'liked';
+        }
+
+        // Devuelve la respuesta JSON con el nuevo conteo de "likes"
+        return new JsonResponse([
+            'action' => $action,
+            'likes' => $film->getLikes(),
         ]);
     }
 
