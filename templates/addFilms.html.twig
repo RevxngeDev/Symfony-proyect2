@@ -50,9 +50,47 @@
     <hr>
 
     <h2 class="text-center">Film List</h2>
-    <div id="filmList" class="list-group"></div> <!-- Contenedor para las películas -->
+    <div id="filmList" class="list-group">
+        {% for film in films %}
+            <div class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <img src="{{ film.picture }}" alt="{{ film.name }}" style="width: 50px; height: auto; margin-right: 10px;">
+                    <span>{{ film.name }}</span>
+                </div>
+                <button class="btn btn-danger btn-sm delete-film" data-id="{{ film.id }}">Delete</button>
+            </div>
+        {% else %}
+            <p class="text-center">No films found.</p>
+        {% endfor %}
+    </div>
+
 </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        loadFilms();
+
+        $(document).on('click', '.delete-film', function () {
+            const filmId = $(this).data('id');
+
+            if (confirm('Are you sure you want to delete this film?')) {
+                $.ajax({
+                    url: '/films/' + filmId,
+                    method: 'DELETE',
+                    success: function () {
+                        location.reload(); // Recargar la página para actualizar la lista
+                    },
+                    error: function () {
+                        alert('Error deleting the film.');
+                    }
+                });
+            }
+        });
+
+    });
+</script>
 </body>
 </html>
