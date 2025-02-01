@@ -11,7 +11,7 @@
 <div class="container">
     <div class="film-container">
         <h1 class="text-center">Add New Film</h1>
-        <form id="filmForm">
+        <form id="filmForm" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="name">Film Name:</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Enter film name" required>
@@ -47,6 +47,11 @@
             <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
         </form>
     </div>
+    <hr>
+
+    <h2 class="text-center">Film List</h2>
+    <div id="filmList" class="list-group"></div> <!-- Contenedor para las películas -->
+</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
