@@ -56,7 +56,8 @@ class FilmService
             return [
                 'id' => $film->getId(),
                 'name' => $film->getName(),
-                'picture' => $film->getPicture(), // Mostrar la imagen también
+                'picture' => $film->getPicture(),
+                'overview' => $film->getOverview(),// Mostrar la imagen también
             ];
         }, $films);
     }
