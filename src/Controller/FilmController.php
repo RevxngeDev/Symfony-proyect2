@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\FilmRepository;
 use App\Service\FilmService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -49,5 +50,18 @@ class FilmController extends AbstractController
         $this->filmService->deleteFilm($id);
         return new JsonResponse(null, 204); // Respuesta 204 (No Content)
     }
+    // src/Controller/FilmController.php
+    #[Route('/film/{id}', name: 'film_details')]
+    public function details(FilmRepository $filmRepository, int $id): Response
+    {
+        $film = $filmRepository->find($id);
+        if (!$film) {
+            throw $this->createNotFoundException('Película no encontrada.');
+        }
+        return $this->render('films.html.twig', [
+            'film' => $film,
+        ]);
+    }
+
 }
 

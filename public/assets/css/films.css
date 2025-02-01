@@ -71,4 +71,6 @@ body {
 button[type="submit"] {
     display: block;
 }
-
+.photo-column {
+    margin-left: 5rem; /* Ajusta este valor según lo que necesites */
+}

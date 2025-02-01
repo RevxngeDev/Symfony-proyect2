@@ -128,16 +128,18 @@
                     $('#filmsContainer').empty(); // Limpiar el contenedor
                     data.forEach(film => {
                         $('#filmsContainer').append(`
-                            <div class="col-md-4">
-                                <div class="card card-custom shadow-sm">
-                                    <img src="${film.picture}" class="card-img-top card-img-top-custom" alt="${film.name}">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${film.name}</h5>
-                                        <p class="card-text">${film.overview}</p>
-                                    </div>
+                    <div class="col-md-4">
+                        <a href="/film/${film.id}" class="text-decoration-none text-dark">
+                            <div class="card card-custom shadow-sm h-100">
+                                <img src="${film.picture}" class="card-img-top card-img-top-custom" alt="${film.name}">
+                                <div class="card-body">
+                                    <h5 class="card-title">${film.name}</h5>
+                                    <p class="card-text">${film.overview}</p>
                                 </div>
                             </div>
-                        `);
+                        </a>
+                    </div>
+                `);
                     });
                 },
                 error: function () {
