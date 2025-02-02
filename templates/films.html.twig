@@ -32,7 +32,7 @@
     <div class="reservation-container text-center">
         <h3>Seat Reservation</h3>
         <div class="screen mx-auto mb-3">Screen</div>
-        <form action="#" method="POST">
+        <form action="{{ path('reserve_seats', {id: film.id}) }}" method="POST">
             <div class="seat-layout d-flex flex-column align-items-center">
                 {% for row in 1..5 %}
                     <div class="d-flex justify-content-center mb-2">
@@ -40,7 +40,8 @@
                             {% set seat_number = (row - 1) * 6 + col %}
                             <div class="seat me-2">
                                 <label>
-                                    <input type="checkbox" name="seats[]" value="{{ seat_number }}">
+                                    <input type="checkbox" name="seats[]" value="{{ seat_number }}"
+                                           {% if seat_number in film.reservedSeats %}disabled{% endif %}>
                                     Seat {{ seat_number }}
                                 </label>
                             </div>

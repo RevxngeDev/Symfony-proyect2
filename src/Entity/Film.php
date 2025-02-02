@@ -40,6 +40,9 @@ class Film
     #[ORM\JoinTable(name: 'film_likes')]
     private Collection $usersWhoLiked; // Relación ManyToMany con User
 
+    #[ORM\Column(type: 'json', nullable: false, options: ['default' => '[]'])]
+    private array $reservedSeats = [];
+
     public function __construct()
     {
         $this->usersWhoLiked = new ArrayCollection();
@@ -86,6 +89,23 @@ class Film
             $this->usersWhoLiked->removeElement($user);
             $this->likes--;
         }
+        return $this;
+    }
+
+    public function getReservedSeats(): array
+    {
+        return $this->reservedSeats;
+    }
+
+    public function setReservedSeats(array $reservedSeats): self
+    {
+        $this->reservedSeats = $reservedSeats;
+        return $this;
+    }
+
+    public function reserveSeats(array $seats): self
+    {
+        $this->reservedSeats = array_unique(array_merge($this->reservedSeats, $seats));
         return $this;
     }
 }

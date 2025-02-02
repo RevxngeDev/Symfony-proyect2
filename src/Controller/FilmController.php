@@ -6,6 +6,7 @@ use App\Entity\Film;
 use App\Entity\User;
 use App\Repository\FilmRepository;
 use App\Service\FilmService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,6 +89,24 @@ class FilmController extends AbstractController
             'action' => $action,
             'likes' => $film->getLikes(),
         ]);
+    }
+
+    #[Route('/film/{id}/reserve-seats', name: 'reserve_seats', methods: ['POST'])]
+    public function reserveSeats(Request $request, Film $film, EntityManagerInterface $em): Response
+    {
+        $seats = $request->request->all('seats');
+
+        if (!empty($seats)) {
+            $film->reserveSeats($seats);
+            $em->persist($film);
+            $em->flush();
+
+            $this->addFlash('success', 'Seats reserved successfully!');
+        } else {
+            $this->addFlash('error', 'No seats selected.');
+        }
+
+        return $this->redirectToRoute('film_details', ['id' => $film->getId()]);
     }
 
 }
