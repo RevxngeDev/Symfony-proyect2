@@ -41,7 +41,8 @@
                             <div class="seat me-2">
                                 <label>
                                     <input type="checkbox" name="seats[]" value="{{ seat_number }}"
-                                           {% if seat_number in film.reservedSeats %}disabled{% endif %}>
+                                           {% if seat_number in film.reservedSeats %}disabled{% endif %}
+                                           data-price="{{ pricePerSeat }}"> <!-- Precio por asiento desde la base de datos -->
                                     Seat {{ seat_number }}
                                 </label>
                             </div>
@@ -49,6 +50,8 @@
                     </div>
                 {% endfor %}
             </div>
+            <input type="hidden" name="total_price" id="total_price" value="0">
+            <p>Total: $<span id="total">0</span></p>
             <button type="submit" class="btn btn-primary mt-3 mx-auto">Reserve Seats</button>
         </form>
     </div>
@@ -58,6 +61,15 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
+        $('input[type="checkbox"]').change(function () {
+            let total = 0;
+            $('input[type="checkbox"]:checked').each(function () {
+                total += parseFloat($(this).data('price'));
+            });
+            $('#total').text(total.toFixed(2));
+            $('#total_price').val(total.toFixed(2));
+        });
+
         $('#likeButton').click(function () {
             $.ajax({
                 url: '{{ path("film_like", {id: film.id}) }}',

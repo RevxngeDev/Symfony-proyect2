@@ -66,6 +66,7 @@ class FilmController extends AbstractController
         }
         return $this->render('films.html.twig', [
             'film' => $film,
+            'pricePerSeat' => $film->getPrice()
         ]);
     }
 
@@ -102,6 +103,7 @@ class FilmController extends AbstractController
         MailerInterface $mailer
     ): Response {
         $seats = $request->request->all('seats');
+        $totalPrice = $request->request->get('total_price');
 
         if (!empty($seats)) {
             // Reservar los asientos
@@ -122,6 +124,7 @@ class FilmController extends AbstractController
                         'user' => $user->getName(), // O cualquier otro campo que identifique al usuario
                         'film' => $film->getName(),
                         'seats' => $seats,
+                        'total_price' => $totalPrice,
                     ]);
 
                 $mailer->send($email);
