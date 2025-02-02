@@ -92,5 +92,10 @@ class FilmService
     {
         return $film->getUsersWhoLiked()->contains($user);
     }
+
+    public function getTopLikedFilms(int $limit = 3): array
+    {
+        return $this->filmRepository->findTopLikedFilms($limit);
+    }
 }
 

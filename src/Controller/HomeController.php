@@ -26,9 +26,12 @@ class HomeController extends AbstractController
         // Obtener el usuario autenticado
         $user = $this->security->getUser();
 
+        $topLikedFilms = $this->filmService->getTopLikedFilms();
+
         // Pasar los datos del usuario a la plantilla
         return $this->render('home/index.html.twig', [
             'user' => $user,
+            'topLikedFilms' => $topLikedFilms,
         ]);
     }
 

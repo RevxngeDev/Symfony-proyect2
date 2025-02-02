@@ -16,6 +16,15 @@ class FilmRepository extends ServiceEntityRepository
         parent::__construct($registry, Film::class);
     }
 
+    public function findTopLikedFilms(int $limit = 3): array
+    {
+        return $this->createQueryBuilder('f')
+            ->orderBy('f.likes', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Film[] Returns an array of Film objects
     //     */
