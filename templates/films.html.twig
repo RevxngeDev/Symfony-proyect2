@@ -70,6 +70,14 @@
             $('#total_price').val(total.toFixed(2));
         });
 
+        $('form').submit(function () {
+            let total = 0;
+            $('input[type="checkbox"]:checked').each(function () {
+                total += parseFloat($(this).data('price'));
+            });
+            $('#total_price').val(total.toFixed(2)); // Asegurar que el valor correcto se envía
+        });
+
         $('#likeButton').click(function () {
             $.ajax({
                 url: '{{ path("film_like", {id: film.id}) }}',
