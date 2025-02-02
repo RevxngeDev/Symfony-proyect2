@@ -128,30 +128,3 @@ body {
     font-size: 1rem; /* Tamaño del texto */
     color: #fff; /* Color del texto */
 }
-/* Asegura que todas las imágenes del carrusel tengan el mismo tamaño */
-.carousel-item {
-    height: 500px; /* Tamaño fijo del carrusel */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Contenedor que forzará el tamaño de la imagen */
-.film-image-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: black; /* Fondo negro para imágenes más pequeñas */
-    overflow: hidden;
-    position: relative;
-}
-
-/* Ajuste de la imagen para mantener el tamaño uniforme */
-.film-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* La imagen se ajusta sin deformarse */
-    position: absolute;
-}
