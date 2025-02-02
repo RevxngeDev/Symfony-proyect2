@@ -1,0 +1,15 @@
+{# templates/emails/reservation_confirmation.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirmación de Reserva</title>
+</head>
+<body>
+<h1>¡Hola, {{ user }}!</h1>
+<p>Gracias por reservar tus asientos en nuestro cine.</p>
+<p>Película: <strong>{{ film }}</strong></p>
+<p>Asientos reservados: <strong>{{ seats|join(', ') }}</strong></p>
+<p>¡Esperamos que disfrutes la función!</p>
+<p>Atentamente,<br>El equipo de Cine</p>
+</body>
+</html>

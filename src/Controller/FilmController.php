@@ -7,10 +7,13 @@ use App\Entity\User;
 use App\Repository\FilmRepository;
 use App\Service\FilmService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FilmController extends AbstractController
@@ -92,14 +95,37 @@ class FilmController extends AbstractController
     }
 
     #[Route('/film/{id}/reserve-seats', name: 'reserve_seats', methods: ['POST'])]
-    public function reserveSeats(Request $request, Film $film, EntityManagerInterface $em): Response
-    {
+    public function reserveSeats(
+        Request $request,
+        Film $film,
+        EntityManagerInterface $em,
+        MailerInterface $mailer
+    ): Response {
         $seats = $request->request->all('seats');
 
         if (!empty($seats)) {
+            // Reservar los asientos
             $film->reserveSeats($seats);
             $em->persist($film);
             $em->flush();
+
+            // Obtener el usuario actual (asumiendo que está autenticado)
+            $user = $this->getUser();
+            if ($user) {
+                // Enviar correo de confirmación
+                $email = (new TemplatedEmail())
+                    ->from(new Address('no-reply@cine.com', 'Cine App'))
+                    ->to($user->getEmail()) // Asegúrate de que tu entidad User tenga un método getEmail()
+                    ->subject('Confirmación de Reserva')
+                    ->htmlTemplate('emails/reservation_confirmation.html.twig')
+                    ->context([
+                        'user' => $user->getName(), // O cualquier otro campo que identifique al usuario
+                        'film' => $film->getName(),
+                        'seats' => $seats,
+                    ]);
+
+                $mailer->send($email);
+            }
 
             $this->addFlash('success', 'Seats reserved successfully!');
         } else {
